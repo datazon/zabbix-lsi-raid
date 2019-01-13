@@ -1,0 +1,1 @@
+UserParameter=lsi.raid[*],powershell -NoProfile -NoLogo -ExecutionPolicy Bypass -File "C:\zabbix\scripts\windows\lsi-raid.ps1" $1 $2 $3 $4
