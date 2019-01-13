@@ -7,7 +7,6 @@ Zabbix Template and PowerShell script with Low Level Discovery (LLD) for LSI Con
  - Add UserParameter to zabbix-agent config
 
 **Tested on:**
- - LSI 6805
  - AVAGO MegaRAID SAS 9361-4i
  - Windows 2012r2
  - Windows 2016
