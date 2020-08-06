@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2020-08-06T11:36:38Z</date>
+    <groups>
+        <group>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>LSI RAID Controller Template</template>
+            <name>LSI RAID Controller Template</name>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>raid</name>
+                </application>
+            </applications>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>LSI Controllers Discovery</name>
+                    <key>lsi.raid[lld,ad]</key>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>LSI Controller No.{#CTRL.ID} state</name>
+                            <key>lsi.raid[health,ad,{#CTRL.ID},main]</key>
+                            <delay>5m</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>raid</name>
+                                </application>
+                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>LSI Controllers</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{regexp(Optimal)}=0</expression>
+                                    <name>LSI Controller No.{#CTRL.ID} Status</name>
+                                    <priority>WARNING</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>LSI Controller No.{#CTRL.ID} Temperature</name>
+                            <key>lsi.raid[health,ad,{#CTRL.ID},temperature]</key>
+                            <delay>5m</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <applications>
+                                <application>
+                                    <name>raid</name>
+                                </application>
+                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>LSI Controllers</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;95</expression>
+                                    <name>LSI Controller No.{#CTRL.ID} Temperature</name>
+                                    <priority>WARNING</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>LSI Battery No.{#CTRL.ID} state</name>
+                    <key>lsi.raid[lld,bt]</key>
+                    <delay>30s</delay>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>LSI Battery No.{#CTRL.ID} state</name>
+                            <key>lsi.raid[health,ad,{#CTRL.ID},battery]</key>
+                            <delay>30s</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>raid</name>
+                                </application>
+                            </applications>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;&gt;0</expression>
+                                    <name>LSI Battery No. {$CTRL.ID} Status</name>
+                                    <priority>WARNING</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>LSI Logical Drives Discovery</name>
+                    <key>lsi.raid[lld,ld]</key>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>LSI Logical Drive {#CTRL.ID}:{#LD.NAME} state</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>lsi.raid[health,ld,{#CTRL.ID},{#LD.ID}]</key>
+                            <delay>5m</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>raid</name>
+                                </application>
+                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>LSI Logical Drives</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{regexp(Optl)}=0</expression>
+                                    <name>LSI Logical Drive {#LD.NAME} status</name>
+                                    <priority>WARNING</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>LSI Physical Drives Discovery</name>
+                    <key>lsi.raid[lld,pd]</key>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>LSI Physical Drive {#CTRL.ID}:{#PD.ID} state</name>
+                            <key>lsi.raid[health,pd,{#CTRL.ID},{#PD.ID}]</key>
+                            <delay>5m</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>raid</name>
+                                </application>
+                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>LSI Physical Drives</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{regexp(Onln|Global Hot-Spare)}=0</expression>
+                                    <name>LSI Physical Drive {#CTRL.ID}:{#PD.ID} Status</name>
+                                    <priority>WARNING</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+    </templates>
+</zabbix_export>
