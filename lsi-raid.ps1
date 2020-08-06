@@ -79,6 +79,12 @@ function GetControllerStatus()
         }
         "temperature" {
             $ctrl_status = $jsondata.Controllers[0].'Response Data'.HwCfg.'ROC temperature(Degree Celsius)'
+            # if empty, take temperature from BBU
+			if ($ctrl_status -eq $null){
+			$ctrl_status = $jsondata.Controllers[0].'Response Data'.'BBU_Info'.'Temp'
+			# del C
+			$ctrl_status = $ctrl_status -replace "C", ""
+			}
         }
     }
     return $ctrl_status
